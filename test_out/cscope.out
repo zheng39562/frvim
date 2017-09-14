@@ -1,0 +1,19 @@
+cscope 15 $HOME/code/frvim               0000000203
+	@/home/zjm/code/frvim/test/test.c
+
+	@/home/zjm/code/frvim/test/test.cpp
+
+	@/home/zjm/code/frvim/test/test.h
+
+	@/home/zjm/code/frvim/test/test.hpp
+
+	@
+1
+.
+0
+4
+136
+/home/zjm/code/frvim/test/test.c
+/home/zjm/code/frvim/test/test.cpp
+/home/zjm/code/frvim/test/test.h
+/home/zjm/code/frvim/test/test.hpp
