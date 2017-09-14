@@ -46,5 +46,7 @@ function! frvim_interface#function#SetTitle() " {{{2
     execute ":normal! G$"
 endfunction " }}}2
 
+
+
 " }}}1
 

@@ -3,10 +3,10 @@ if exists("g:loaded_frvim_plugin")
 endif
 let g:loaded_frvim_plugin = 1
 
-runtime ./frvim_plugin/*.vim
-
 " Command {{{1
-command! FrvimUpdate call frvim#UpdateAll();
+command! FrvimUpdateAll call frvim#UpdateAll()
+command! FrvimUpdate call frvim#Update()
+command! FrvimVersion call frvim#Version()
 "}}}1
 
 " Auto Command {{{1
@@ -22,7 +22,7 @@ augroup C_and_CPP_Group
     "autocmd FileType c,cpp :set omnifunc=ccomplete#Complete;
     "autocmd FileType c,cpp :set omnifunc=omni#cpp#complete#Main
 	
-	autocmd VimEnter * execute "call frvim_plugin#config#Initialization()"
+	autocmd VimEnter * execute "call frvim#Initialization()"
 augroup END	
 "}}}2
 
