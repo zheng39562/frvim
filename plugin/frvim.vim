@@ -7,6 +7,7 @@ let g:loaded_frvim_plugin = 1
 command! FrvimUpdateAll call frvim#UpdateAll()
 command! FrvimUpdate call frvim#Update()
 command! FrvimVersion call frvim#Version()
+command! FrvimNewPro call frvim#CreateProject()
 "}}}1
 
 " Auto Command {{{1

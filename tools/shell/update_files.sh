@@ -17,19 +17,18 @@ function GetArray()
 
 # ./tools/shell/update_files.sh ./ *h,*c,*cc,*cpp,*hpp *update_file* ./
 echo "=== Find Files ==="
-echo " |- folder pattern : [$1]"
-echo " |- file pattern : [$2]"
-echo " |- file filter : [$3]"
-echo " |- out file : [$4]"
+echo " |- folder pattern : [${frvim_folder_pattern_array}]"
+echo " |- file pattern : [${frvim_file_pattern_array}]"
+echo " |- file filter : [${frvim_file_filter_array}]"
+echo " |- out file : [${frvim_out_file}]"
 
-folder_pattern_array=(`GetArray $1`)
-file_pattern_array=(`GetArray $2`)
-file_filter_array=(`GetArray $3`)
-out_file=$4/files
+folder_pattern_array=(`GetArray ${frvim_folder_pattern_array}`)
+file_pattern_array=(`GetArray ${frvim_file_pattern_array}`)
+file_filter_array=(`GetArray ${frvim_file_filter_array}`)
 
-echo " ... clean old files : ${out_file}"
-rm -f ${out_file}
-touch -f ${out_file}
+echo " ... clean old files : ${frvim_out_file}"
+rm -f ${frvim_out_file}
+touch -f ${frvim_out_file}
 
 echo " ... parse pattern "
 include_file_pattern=""
@@ -55,8 +54,9 @@ echo " ... finding"
 folder_pwd_tmp=""
 for folder_pattern_item in ${folder_pattern_array[@]} 
 do 
-	folder_pwd_tmp=$(cd "$(dirname "${folder_pattern_item}")"; pwd)
-	find ${folder_pwd_tmp} ${exclude_file_pattern} ${include_file_pattern} >> ${out_file}
+	folder_pwd_tmp=$(cd "${folder_pattern_item}"; pwd)
+	echo "find ${folder_pwd_tmp} ${exclude_file_pattern} ${include_file_pattern} >> ${frvim_out_file}"
+	find ${folder_pwd_tmp} ${exclude_file_pattern} ${include_file_pattern} >> ${frvim_out_file}
 done
 
 echo "=== End Find Files ==="
