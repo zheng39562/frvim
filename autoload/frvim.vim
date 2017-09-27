@@ -63,20 +63,22 @@ function frvim#InitScript() " {{{2
 	\ 'export frvim_folder_pattern_array=' . s:folder_pattern,
 	\ 'export frvim_file_pattern_array=' . s:file_pattern,
 	\ 'export frvim_file_filter_array=' . s:file_filter,
-	\ 'export frvim_out_file=' . s:out_project_directory . '/files',
+	\ 'export frvim_out_file=' . s:out_project_directory . 'files',
 	\ 'sh ' . g:frvim_plugin_tool_path . 'update_files.sh',
 	\ ]
-	call writefile(l:file_scirpt, s:out_project_directory . "update_file.sh")
+	call writefile(l:file_scirpt, s:out_project_directory . "update_files.sh")
 
 	let l:tag_scirpt = [
+	\ '#! /bin/bash',
 	\ "export frvim_source_file=" . s:out_source_files_file,
-	\ "export frvim_out_file=" . s:out_project_directory . "/project.tags",
+	\ "export frvim_out_file=" . s:out_project_directory . "project.tags",
 	\ "sh " . g:frvim_plugin_tool_path . "update_tags.sh",
 	\ ]
 
 	call writefile(l:tag_scirpt, s:out_project_directory . "update_tags.sh")
 
 	let l:cscope_scirpt = [
+	\ '#! /bin/bash',
 	\ "export frvim_source_file=" . s:out_source_files_file,
 	\ "export frvim_out_directory=" . s:out_project_directory,
 	\ "sh " . g:frvim_plugin_tool_path . "update_cscope.sh",
@@ -84,12 +86,11 @@ function frvim#InitScript() " {{{2
 	call writefile(l:cscope_scirpt, s:out_project_directory . "update_cscope.sh")
 endfunction " }}}2
 
-
 function! frvim#Initialization() " {{{2
 	let l:absolute_path = getcwd()
 	let l:config_file = findfile("./.frvim.cfg")
 
-	if !empty(l:config_file) && g:frvim_active_environment == 0
+	if !empty(l:config_file)
 		let g:frvim_active_environment = 1
 		call frvim#project_property#LoadConfigFile(l:absolute_path."/".l:config_file)
 
@@ -123,26 +124,12 @@ function frvim#UpdateAll() " {{{2
 endfunction " }}}2
 
 function frvim#Update() " {{{2
-	if empty(g:frvim_plugin_tool_path) || empty(s:out_source_files_file) || empty(s:out_project_directory)
-		echoe "g:frvim_plugin_tool_path or s:out_source_files_file or s:out_project_directory is empty"
-		echoe g:frvim_plugin_tool_path . "update_tags.sh " . s:out_source_files_file . " " . s:out_project_directory
-		echoe g:frvim_plugin_tool_path . "update_cscope.sh " . s:out_source_files_file . " " . s:out_project_directory
-		return 
-	endif
-
-	echom "! sh " . g:frvim_plugin_tool_path . "update_tags.sh " . s:out_source_files_file . " " . s:out_project_directory
-	silent! execute "! sh " . g:frvim_plugin_tool_path . "update_tags.sh " . s:out_source_files_file . " " . s:out_project_directory
-	echom "! sh " . g:frvim_plugin_tool_path . "update_cscope.sh " . s:out_source_files_file . " " . s:out_project_directory
-	silent! execute "! sh " . g:frvim_plugin_tool_path . "update_cscope.sh " . s:out_source_files_file . " " . s:out_project_directory
+	silent! execute "! sh " . s:out_project_directory . "update_tags.sh"
+	silent! execute "! sh " . s:out_project_directory . "update_cscope.sh"
 endfunction " }}}2
 
 function frvim#UpdateFiles() " {{{2
-	if empty(g:frvim_plugin_tool_path) || empty(s:folder_pattern) || empty(s:file_pattern) || empty(s:file_filter) || empty(s:out_project_directory)
-		echoe "g:frvim_plugin_tool_path [".g:frvim_plugin_tool_path."] s:folder_pattern [".s:folder_pattern."] s:file_pattern [".s:file_pattern."] s:file_filter [".s:file_filter."] s:out_project_directory [".s:out_project_directory."]"
-		echoe g:frvim_plugin_tool_path . "update_files.sh ".s:folder_pattern." ".s:file_pattern." ".s:file_filter." ".s:out_project_directory
-		return
-	endif
-	silent! execute "! sh " . g:frvim_plugin_tool_path . "update_files.sh ".s:folder_pattern." ".s:file_pattern." ".s:file_filter." ".s:out_project_directory
+	silent! execute "! sh " . s:out_project_directory . "update_files.sh"
 endfunction " }}}2
 
 
