@@ -14,13 +14,17 @@ let g:frvim_plugin_doc_path = g:frvim_plugin_path . "/doc/"
 
 " script variable {{{2
 let s:project_name = ""
-let s:out_directory = ""
+let s:out_project_directory = ""
 let s:folder_pattern = ""
 let s:file_pattern = ""
 let s:file_filter = ""
 let s:out_source_files_file = ""
 " }}}2
 
+function frvim#UpdateCscopeLink()
+	silent exec "cscope kill " . s:out_project_directory . "cscope.out"
+	silent exec "cscope add " . s:out_project_directory .  "cscope.out"
+endfunction
 
 function frvim#CreateProject() " {{{2
 	"let l:absolute_path = getcwd()."/"
@@ -103,6 +107,8 @@ function! frvim#Initialization() " {{{2
 			let s:file_filter = frvim#project_property#GetProperty("file_filter")
 
 			silent! execute "! mkdir -p " . s:out_project_directory
+	
+			let &tags = &tags . "," . s:out_project_directory . "project.tags"
 
 			call frvim#InitScript()
 		else
@@ -114,22 +120,35 @@ endfunction " }}}2
 function frvim#UpdateAll() " {{{2
 	call frvim#Initialization()
 	if !empty(s:project_name)
-		echom "frvim#UpdateFiles()"
-		call frvim#UpdateFiles()
-		echom "frvim#Update()"
-		call frvim#Update()
+		let l:shell_link = " && "
+
+		let l:cmd = ''
+		let l:cmd .= "sh " . s:out_project_directory . "update_files.sh"
+		let l:cmd .= l:shell_link . "sh " . s:out_project_directory . "update_tags.sh"
+		let l:cmd .= l:shell_link . "sh " . s:out_project_directory . "update_cscope.sh"
+
+		execute "! " . l:cmd
+
+		call frvim#UpdateCscopeLink()
 	else
 		echoe "project name is not allow empty."
 	endif
 endfunction " }}}2
 
 function frvim#Update() " {{{2
-	silent! execute "! sh " . s:out_project_directory . "update_tags.sh"
-	silent! execute "! sh " . s:out_project_directory . "update_cscope.sh"
+	let l:shell_link = " && "
+
+	let l:cmd = ''
+	let l:cmd .= "sh " . s:out_project_directory . "update_tags.sh"
+	let l:cmd .= l:shell_link . "sh " . s:out_project_directory . "update_cscope.sh"
+	
+	execute "! " . l:cmd
+
+	call frvim#UpdateCscopeLink()
 endfunction " }}}2
 
 function frvim#UpdateFiles() " {{{2
-	silent! execute "! sh " . s:out_project_directory . "update_files.sh"
+	execute "! sh " . s:out_project_directory . "update_files.sh"
 endfunction " }}}2
 
 
