@@ -22,7 +22,6 @@ let s:out_source_files_file = ""
 " }}}2
 
 function frvim#UpdateCscopeLink()
-	silent exec "cscope kill " . s:out_project_directory . "cscope.out"
 	silent exec "cscope add " . s:out_project_directory .  "cscope.out"
 endfunction
 
