@@ -21,9 +21,9 @@ let s:file_filter = ""
 let s:out_source_files_file = ""
 " }}}2
 
-function frvim#UpdateCscopeLink()
+function frvim#UpdateCscopeLink() " {{{2
 	silent exec "cscope add " . s:out_project_directory .  "cscope.out"
-endfunction
+endfunction " }}}2
 
 function frvim#CreateProject() " {{{2
 	"let l:absolute_path = getcwd()."/"
@@ -150,4 +150,8 @@ function frvim#UpdateFiles() " {{{2
 	execute "! sh " . s:out_project_directory . "update_files.sh"
 endfunction " }}}2
 
+function frvim#AddCppBaseTags()	
+	execute "! sh " . g:frvim_plugin_tool_path . "cpp/build_ctags.sh " . s:out_project_directory
+	let &tags = &tags . "," . s:out_project_directory . "base_include.tags"
+endfunction
 

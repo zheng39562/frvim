@@ -8,6 +8,7 @@ command! FrvimUpdateAll call frvim#UpdateAll()
 command! FrvimUpdate call frvim#Update()
 command! FrvimVersion call frvim#Version()
 command! FrvimNewPro call frvim#CreateProject()
+command! FrvimAddCppBaseTags call frvim#AddCppBaseTags()	
 "}}}1
 
 " Auto Command {{{1
