@@ -3,6 +3,10 @@ if exists("g:loaded_frvim_plugin")
 endif
 let g:loaded_frvim_plugin = 1
 
+" Setting {{{1
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+" }}}1
+
 " Command {{{1
 command! FrvimUpdateAll call frvim#UpdateAll()
 command! FrvimUpdate call frvim#Update()
