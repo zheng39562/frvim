@@ -108,6 +108,7 @@ function! frvim#Initialization() " {{{2
 			silent! execute "! mkdir -p " . s:out_project_directory
 	
 			let &tags = &tags . "," . s:out_project_directory . "project.tags"
+			call frvim#UpdateCscopeLink()
 
 			call frvim#InitScript()
 		else
