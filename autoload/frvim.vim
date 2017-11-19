@@ -22,6 +22,7 @@ let s:out_source_files_file = ""
 " }}}2
 
 function frvim#UpdateCscopeLink() " {{{2
+	silent exec "cscope reset "
 	silent exec "cscope add " . s:out_project_directory .  "cscope.out"
 endfunction " }}}2
 
