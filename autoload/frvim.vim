@@ -3,9 +3,9 @@ if exists("g:loaded_frvim_autoload")
 endif
 let g:loaded_frvim_autoload = 1
 
-function! frvim#Version() " {{{2
+function! frvim#Version() 
 	return '1.0.0'
-endfunction " }}}2
+endfunction 
 
 let g:frvim_active_environment = 0
 let g:frvim_plugin_path = frvim#function#GetPluginPath()
@@ -19,18 +19,14 @@ let s:folder_pattern = ""
 let s:file_pattern = ""
 let s:file_filter = ""
 let s:out_source_files_file = ""
-" }}}2
 
-function frvim#UpdateCscopeLink() " {{{2
-	silent exec "cscope reset "
+
+function frvim#UpdateCscopeLink() 
 	silent exec "cscope add " . s:out_project_directory .  "cscope.out"
-endfunction " }}}2
+	silent exec "cscope reset"
+endfunction 
 
-function frvim#CreateProject() " {{{2
-	"let l:absolute_path = getcwd()."/"
-"	silent! execute "! cp " . g:frvim_plugin_doc_path . "frvim.cfg " . l:absolute_path . ".frvim.cfg"
-"	execute ":vi " . l:absolute_path . ".frvim.cfg"
-
+function frvim#CreateProject() 
 	silent 1,$d _
 	silent call append (0, [
 			\ "# frvim configure.",
@@ -59,9 +55,9 @@ function frvim#CreateProject() " {{{2
 
 	silent execute "w! .frvim.cfg"
 	silent execute "normal gg"
-endfunction " }}}2
+endfunction 
 
-function frvim#InitScript() " {{{2
+function frvim#InitScript() 
 	let l:file_scirpt = [
 	\ '#! /bin/bash',
 	\ 'export frvim_folder_pattern_array=' . s:folder_pattern,
@@ -88,9 +84,9 @@ function frvim#InitScript() " {{{2
 	\ "sh " . g:frvim_plugin_tool_path . "update_cscope.sh",
 	\ ]
 	call writefile(l:cscope_scirpt, s:out_project_directory . "update_cscope.sh")
-endfunction " }}}2
+endfunction 
 
-function! frvim#Initialization() " {{{2
+function! frvim#Initialization()
 	let l:absolute_path = getcwd()
 	let l:config_file = findfile("./.frvim.cfg")
 
@@ -115,9 +111,9 @@ function! frvim#Initialization() " {{{2
 			echoe "project name is not allow empty."
 		endif
 	endif
-endfunction " }}}2
+endfunction 
 
-function frvim#UpdateAll() " {{{2
+function frvim#UpdateAll() 
 	call frvim#Initialization()
 	if !empty(s:project_name)
 		let l:shell_link = " && "
@@ -133,9 +129,9 @@ function frvim#UpdateAll() " {{{2
 	else
 		echoe "project name is not allow empty."
 	endif
-endfunction " }}}2
+endfunction 
 
-function frvim#Update() " {{{2
+function frvim#Update() 
 	let l:shell_link = " && "
 
 	let l:cmd = ''
@@ -145,11 +141,11 @@ function frvim#Update() " {{{2
 	execute "! " . l:cmd
 
 	call frvim#UpdateCscopeLink()
-endfunction " }}}2
+endfunction
 
-function frvim#UpdateFiles() " {{{2
+function frvim#UpdateFiles()
 	execute "! sh " . s:out_project_directory . "update_files.sh"
-endfunction " }}}2
+endfunction
 
 function frvim#AddCppBaseTags()	
 	execute "! sh " . g:frvim_plugin_tool_path . "cpp/build_ctags.sh " . s:out_project_directory
