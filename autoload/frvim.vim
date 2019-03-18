@@ -12,7 +12,6 @@ let g:frvim_plugin_path = frvim#function#GetPluginPath()
 let g:frvim_plugin_tool_path = g:frvim_plugin_path . "/tools/shell/"
 let g:frvim_plugin_doc_path = g:frvim_plugin_path . "/doc/"
 
-" script variable {{{2
 let s:project_name = ""
 let s:out_project_directory = ""
 let s:folder_pattern = ""
@@ -151,4 +150,10 @@ function frvim#AddCppBaseTags()
 	execute "! sh " . g:frvim_plugin_tool_path . "cpp/build_ctags.sh " . s:out_project_directory
 	let &tags = &tags . "," . s:out_project_directory . "base_include.tags"
 endfunction
+
+function frvim#searchWord()	
+	let s:ack_word = expand('<cword>')
+	execute "Ack " . s:ack_word
+endfunction
+
 

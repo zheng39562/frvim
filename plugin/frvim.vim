@@ -15,6 +15,7 @@ command! FrvimUpdate call frvim#Update()
 command! FrvimVersion call frvim#Version()
 command! FrvimNewPro call frvim#CreateProject()
 command! FrvimAddCppBaseTags call frvim#AddCppBaseTags()	
+command! FrvimSearchWord call frvim#searchWord()	
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
